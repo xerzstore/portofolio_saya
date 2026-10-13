@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="id">
+<lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -857,10 +857,192 @@
         transform: none;
       }
     }
+    
+/* ===== INTERACTIVE UPGRADES ===== */
+
+body {
+  transition: background .35s ease, color .35s ease;
+}
+
+/* Light mode */
+body.light-mode {
+  --bg: #f4f7fc;
+  --surface: #ffffff;
+  --surface-light: #edf2fa;
+  --text: #182238;
+  --muted: #5e6b82;
+  --blue: #3268dc;
+  --cyan: #078b9b;
+  --border: rgba(30, 50, 90, .14);
+}
+
+body.light-mode::before {
+  background:
+    radial-gradient(ellipse at 10% 10%, rgba(59,110,255,.10), transparent 35%),
+    radial-gradient(ellipse at 90% 40%, rgba(36,205,225,.08), transparent 30%);
+}
+
+body.light-mode header {
+  background: rgba(244,247,252,.86);
+}
+
+body.light-mode .nav-links {
+  background-color: var(--surface);
+}
+
+body.light-mode .nav-links a {
+  color: var(--muted);
+}
+
+body.light-mode .nav-links a:hover {
+  color: var(--text);
+}
+
+body.light-mode .nav-cta {
+  color: var(--text) !important;
+}
+
+body.light-mode .panel,
+body.light-mode .skill,
+body.light-mode .project,
+body.light-mode .service,
+body.light-mode .contact-panel {
+  background-color: var(--surface);
+}
+
+body.light-mode .project-cover {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(67,123,255,.16), transparent 55%),
+    #e9effa;
+}
+
+body.light-mode .project-cover::before {
+  background-image:
+    linear-gradient(rgba(30,50,90,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,50,90,.07) 1px, transparent 1px);
+}
+
+body.light-mode .cover-logo {
+  text-shadow: none;
+}
+
+body.light-mode .floating-tag {
+  background: #ffffff;
+  color: #24314a;
+}
+
+body.light-mode .hero-monogram {
+  background: linear-gradient(140deg, #e3ebff, #ffffff 65%);
+}
+
+body.light-mode .skill-level,
+body.light-mode .tags span {
+  background: #e8efff;
+  color: #3159a5;
+}
+
+body.light-mode .btn-secondary {
+  color: var(--text);
+  background: rgba(30,50,90,.04);
+}
+
+body.light-mode .socials a,
+body.light-mode .project-link,
+body.light-mode .email-text {
+  color: #315fc0;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 9px 13px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  transition: transform .25s, background .25s;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+}
+
+/* Scroll progress bar */
+#scrollProgress {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  box-shadow: 0 0 12px rgba(99,149,255,.5);
+}
+
+/* Back to top */
+#backToTop {
+  position: fixed;
+  right: 20px;
+  bottom: 22px;
+  z-index: 90;
+  width: 45px;
+  height: 45px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 21px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: .25s;
+  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
+#backToTop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#backToTop:hover {
+  transform: translateY(-4px);
+}
+
+/* Typing animation cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 4px;
+  vertical-align: -2px;
+  background: var(--cyan);
+  animation: cursorBlink .8s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  50% { opacity: 0; }
+}
+
+@media (max-width: 560px) {
+  .theme-toggle {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+}
+
   </style>
 </head>
 
-<body id="top">
+<id="top">
 
   <header>
     <nav class="container">
@@ -951,8 +1133,7 @@
               Saya adalah pelajar yang tertarik pada teknologi,
               website, dan peluang di dunia digital. Saat ini saya
               mengembangkan keterampilan secara bertahap melalui
-              praktik dan proyek pribadi.
-            </p>
+</p>
           </div>
 
           <div class="panel reveal">
@@ -1173,50 +1354,189 @@
     </div>
   </footer>
 
-  <script>
-    // Menu navigasi untuk HP
-    const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.getElementById("navLinks");
+<script>
+  // ===== 1. DARK MODE / LIGHT MODE =====
+  const body = document.body;
+  const navLinks = document.getElementById("navLinks");
+  const menuBtn = document.getElementById("menuBtn");
 
-    menuBtn.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("open");
-      menuBtn.setAttribute("aria-expanded", String(isOpen));
-      menuBtn.textContent = isOpen ? "✕" : "☰";
-    });
+  const themeBtn = document.createElement("button");
+  themeBtn.className = "theme-toggle";
+  themeBtn.type = "button";
+  themeBtn.setAttribute("aria-label", "Ganti tema");
+  navLinks.appendChild(themeBtn);
 
-    // Tutup menu setelah memilih bagian
-    navLinks.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.textContent = "☰";
-      });
-    });
+  function updateThemeButton() {
+    const isLight = body.classList.contains("light-mode");
+    themeBtn.textContent = isLight ? "🌙 Dark Mode" : "☀️ Light Mode";
+    themeBtn.setAttribute("aria-pressed", String(isLight));
+  }
 
-    // Animasi saat elemen masuk ke layar
-    const revealElements = document.querySelectorAll(".reveal");
+  // Pulihkan tema tersimpan
+  try {
+    if (localStorage.getItem("portfolio-theme") === "light") {
+      body.classList.add("light-mode");
+    }
+  } catch (error) {
+    // Website tetap berfungsi jika penyimpanan tidak tersedia
+  }
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.12
-      });
+  updateThemeButton();
 
-      revealElements.forEach(element => observer.observe(element));
-    } else {
-      revealElements.forEach(element => element.classList.add("visible"));
+  themeBtn.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
+
+    const theme = body.classList.contains("light-mode")
+      ? "light"
+      : "dark";
+
+    try {
+      localStorage.setItem("portfolio-theme", theme);
+    } catch (error) {
+      // Tema tetap berubah untuk halaman saat ini
     }
 
-    // Tahun otomatis
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-  </script>
+    updateThemeButton();
+  });
 
+  // ===== 2. MENU NAVIGASI HP =====
+  menuBtn.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+    menuBtn.textContent = isOpen ? "✕" : "☰";
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.textContent = "☰";
+    });
+  });
+
+  // Tutup menu setelah memilih tema
+  themeBtn.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.textContent = "☰";
+  });
+
+  // ===== 3. ANIMASI SAAT SCROLL =====
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealElements.forEach(element => observer.observe(element));
+  } else {
+    revealElements.forEach(element => {
+      element.classList.add("visible");
+    });
+  }
+
+  // ===== 4. ANIMASI MENGETIK =====
+  const heroCopy = document.querySelector(".hero-copy");
+  const heroDesc = document.querySelector(".hero-desc");
+
+  if (heroCopy && heroDesc) {
+    const typingLine = document.createElement("p");
+    typingLine.style.cssText =
+      "min-height:28px;margin-top:-18px;margin-bottom:22px;" +
+      "color:var(--cyan);font-size:14px;font-weight:600;";
+
+    typingLine.innerHTML =
+      '<span id="typingText"></span>' +
+      '<span class="typing-cursor"></span>';
+
+    heroDesc.insertAdjacentElement("afterend", typingLine);
+
+    const typingText = document.getElementById("typingText");
+    const phrases = [
+      "Belajar web development.",
+      "Membangun proyek digital.",
+      "Terus berkembang setiap hari."
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeEffect() {
+      const phrase = phrases[phraseIndex];
+
+      if (deleting) {
+        charIndex--;
+      } else {
+        charIndex++;
+      }
+
+      typingText.textContent = phrase.slice(0, charIndex);
+
+      let delay = deleting ? 35 : 75;
+
+      if (!deleting && charIndex === phrase.length) {
+        deleting = true;
+        delay = 1400;
+      } else if (deleting && charIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        delay = 350;
+      }
+
+      setTimeout(typeEffect, delay);
+    }
+
+    typeEffect();
+  }
+
+  // ===== 5. GARIS PROGRES SCROLL =====
+  const progress = document.createElement("div");
+  progress.id = "scrollProgress";
+  document.body.appendChild(progress);
+
+  // ===== 6. TOMBOL KEMBALI KE ATAS =====
+  const backTop = document.createElement("button");
+  backTop.id = "backToTop";
+  backTop.type = "button";
+  backTop.textContent = "↑";
+  backTop.setAttribute("aria-label", "Kembali ke atas");
+  document.body.appendChild(backTop);
+
+  backTop.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
+  function updateScrollEffects() {
+    const scrollable =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    const percentage = scrollable > 0
+      ? (window.scrollY / scrollable) * 100
+      : 0;
+
+    progress.style.width = percentage + "%";
+    backTop.classList.toggle("show", window.scrollY > 350);
+  }
+
+  window.addEventListener("scroll", updateScrollEffects, {
+    passive: true
+  });
+
+  updateScrollEffects();
+  
+  // ===== 7. TAHUN OTOMATIS =====
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
 </body>
 </html>
